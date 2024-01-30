@@ -1,0 +1,1 @@
+A basic Dockerfile is one that is often written in a single stage. This is functional and it works, but it doesn't leverage the parallelization that you get with BuildKit out of the box. See the [multi-stage example](https://github.com/depot/examples/buildkit/multi-stage) for how to transform this Dockerfile into one that BuildKit can build in parallel.
