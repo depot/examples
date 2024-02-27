@@ -11,7 +11,7 @@ async function createProject(project_name, organization_id) {
       name: project_name,
       organizationId: organization_id,
       regionId: "us-east-1",
-      //      cachePolicy:    {keepBytes: 50 * 1024 * 1024 * 1024, keepDays: 14},
+      cachePolicy: { keepBytes: 50 * 1024 * 1024 * 1024, keepDays: 14 }, // 50GB and 14 days
     },
     { headers }
   );
