@@ -1,0 +1,14 @@
+{
+  "name": "build-api",
+  "version": "1.0.0",
+  "description": "Interact with the Depot API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kylegalbraith",
+  "license": "ISC",
+  "dependencies": {
+    "@depot/sdk-node": "^0.4.0"
+  }
+}
