@@ -13,6 +13,7 @@ async function deleteProject(project_id) {
   );
 }
 
+const args = process.argv.slice(2);
 const project_id = args[0];
 
 deleteProject(project_id);

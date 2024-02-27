@@ -17,6 +17,7 @@ async function createProject(project_name, organization_id) {
   console.log(result.project);
 }
 
+const args = process.argv.slice(2);
 const project_name = args[0];
 const organization_id = args[1];
 

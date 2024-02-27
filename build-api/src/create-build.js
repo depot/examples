@@ -38,6 +38,7 @@ async function runBuild(projectID) {
   );
 }
 
+const args = process.argv.slice(2);
 const projectID = args[0];
 
 runBuild(projectID);
