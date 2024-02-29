@@ -21,6 +21,7 @@ async function runBuild(projectID) {
     "depot build --load .",
     {
       env: {
+        ...process.env,
         DEPOT_PROJECT_ID: projectID,
         DEPOT_BUILD_ID: result.buildId,
         DEPOT_TOKEN: result.buildToken,
