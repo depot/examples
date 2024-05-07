@@ -1,0 +1,39 @@
+name: Deploy pnpm-fastify to Fly.io
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+
+    env:
+      FLY_ACCESS_TOKEN: ${{ secrets.FLY_ACCESS_TOKEN }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Login to Fly registry
+        run: flyctl auth docker
+
+      - name: Set up Depot CLI
+        uses: depot/setup-action@v1
+
+      - name: Build and push image
+        uses: depot/build-action@v1
+        with:
+          context: ./node/pnpm-fastify
+          platforms: linux/amd64
+          push: true
+          tag: registry.fly.io/depot-examples-pnpm-fastify:latest
+
+      - name: Deploy to Fly.io
+        run: flyctl deploy --image registry.fly.io/depot-examples-pnpm-fastify:latest
