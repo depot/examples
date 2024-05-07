@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   deploy:
-    runs-on: ubuntu-22.04
+    runs-on: depot-ubuntu-22.04
 
     env:
       FLY_ACCESS_TOKEN: ${{ secrets.FLY_ACCESS_TOKEN }}
