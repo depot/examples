@@ -36,4 +36,4 @@ jobs:
           tags: registry.fly.io/depot-examples-pnpm-fastify:latest
 
       - name: Deploy to Fly.io
-        run: flyctl deploy --image registry.fly.io/depot-examples-pnpm-fastify:latest
+        run: flyctl deploy --config ../../node/pnpm-fastify/fly.toml --image registry.fly.io/depot-examples-pnpm-fastify:latest
