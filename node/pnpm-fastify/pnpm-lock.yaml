@@ -16,8 +16,8 @@ importers:
         version: 0.5.21
     devDependencies:
       '@types/node':
-        specifier: ^22.10.10
-        version: 22.10.10
+        specifier: ^22.13.14
+        version: 22.13.14
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
@@ -29,7 +29,7 @@ importers:
         version: 0.18.1(prettier@3.3.3)
       ts-node:
         specifier: ^10.4.0
-        version: 10.4.0(@types/node@22.10.10)(typescript@5.6.3)
+        version: 10.4.0(@types/node@22.13.14)(typescript@5.6.3)
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -68,8 +68,8 @@ packages:
   '@tsconfig/node16@1.0.4':
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
 
-  '@types/node@22.10.10':
-    resolution: {integrity: sha512-X47y/mPNzxviAGY5TcYPtYL8JsY3kAq2n8fMmKoRCxq/c4v4pyGNCzM2R6+M5/umG4ZfHuT+sgqDYqWc9rJ6ww==}
+  '@types/node@22.13.14':
+    resolution: {integrity: sha512-Zs/Ollc1SJ8nKUAgc7ivOEdIBM8JAKgrqqUYi2J997JuKO7/tpQC+WCetQ1sypiKCQWHdvdg9wBNpUPEWZae7w==}
 
   abort-controller@3.0.0:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
@@ -383,7 +383,7 @@ snapshots:
 
   '@tsconfig/node16@1.0.4': {}
 
-  '@types/node@22.10.10':
+  '@types/node@22.13.14':
     dependencies:
       undici-types: 6.20.0
 
@@ -619,14 +619,14 @@ snapshots:
 
   toad-cache@3.7.0: {}
 
-  ts-node@10.4.0(@types/node@22.10.10)(typescript@5.6.3):
+  ts-node@10.4.0(@types/node@22.13.14)(typescript@5.6.3):
     dependencies:
       '@cspotcode/source-map-support': 0.7.0
       '@tsconfig/node10': 1.0.9
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 22.10.10
+      '@types/node': 22.13.14
       acorn: 8.8.2
       acorn-walk: 8.2.0
       arg: 4.1.3
