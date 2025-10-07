@@ -3,13 +3,15 @@ module example
 go 1.25
 
 require (
+	buf.build/gen/go/depot/api/connectrpc/go v1.19.0-20250915125527-3af9e416de91.1
+	buf.build/gen/go/depot/api/protocolbuffers/go v1.36.10-20250915125527-3af9e416de91.1
+	connectrpc.com/connect v1.19.0
 	github.com/depot/depot-go v0.5.1
 	github.com/docker/cli v28.5.0+incompatible
 	github.com/moby/buildkit v0.13.2
 )
 
 require (
-	connectrpc.com/connect v1.16.1 // indirect
 	github.com/AdaLogics/go-fuzz-headers v0.0.0-20230811130428-ced1acdcaa24 // indirect
 	github.com/Microsoft/go-winio v0.6.2 // indirect
 	github.com/Microsoft/hcsshim v0.11.7 // indirect
@@ -31,7 +33,7 @@ require (
 	github.com/gogo/googleapis v1.4.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
-	github.com/google/go-cmp v0.6.0 // indirect
+	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.16.0 // indirect
@@ -71,6 +73,6 @@ require (
 	google.golang.org/genproto/googleapis/api v0.0.0-20240227224415-6ceb2ff114de // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240401170217-c3f982113cda // indirect
 	google.golang.org/grpc v1.63.2 // indirect
-	google.golang.org/protobuf v1.35.2 // indirect
+	google.golang.org/protobuf v1.36.10 // indirect
 	gotest.tools/v3 v3.5.2 // indirect
 )
