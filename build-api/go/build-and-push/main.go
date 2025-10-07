@@ -11,8 +11,6 @@ import (
 	"github.com/depot/depot-go/machine"
 	cliv1 "github.com/depot/depot-go/proto/depot/cli/v1"
 	"github.com/docker/cli/cli/config"
-	"github.com/docker/cli/cli/config/configfile"
-	"github.com/docker/cli/cli/config/types"
 	"github.com/moby/buildkit/client"
 	"github.com/moby/buildkit/session"
 	"github.com/moby/buildkit/session/auth/authprovider"
@@ -70,19 +68,15 @@ func main() {
 	// Option 1: Use docker login credentials (default)
 	authProvider := authprovider.NewDockerAuthProvider(config.LoadDefaultConfigFile(os.Stderr), nil)
 
-	// Option 2: Provide credentials programmatically (uncomment to use)
+	// Option 2: Provide credentials programmatically (uncomment and add imports to use)
+	// See: github.com/docker/cli/cli/config/configfile and github.com/docker/cli/cli/config/types
 	// username := os.Getenv("DOCKERHUB_USERNAME")
 	// password := os.Getenv("DOCKERHUB_TOKEN")
-	// if username != "" && password != "" {
-	// 	authProvider = authprovider.NewDockerAuthProvider(&configfile.ConfigFile{
-	// 		AuthConfigs: map[string]types.AuthConfig{
-	// 			"https://index.docker.io/v1/": {
-	// 				Username: username,
-	// 				Password: password,
-	// 			},
-	// 		},
-	// 	}, nil)
-	// }
+	// authProvider = authprovider.NewDockerAuthProvider(&configfile.ConfigFile{
+	// 	AuthConfigs: map[string]types.AuthConfig{
+	// 		"https://index.docker.io/v1/": {Username: username, Password: password},
+	// 	},
+	// }, nil)
 
 	// 5. Configure build with push
 	solverOptions := client.SolveOpt{
