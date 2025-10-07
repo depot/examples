@@ -86,8 +86,8 @@ func main() {
 			"platform": "linux/arm64",
 		},
 		LocalDirs: map[string]string{
-			"dockerfile": "..",
-			"context":    "..",
+			"dockerfile": ".",
+			"context":    ".",
 		},
 		Exports: []client.ExportEntry{
 			{
