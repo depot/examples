@@ -45,5 +45,5 @@ func main() {
 		log.Fatalf("Failed to delete project: %v", err)
 	}
 
-	fmt.Printf("Project %s deleted successfully!\n", projectID)
+	log.Printf("Project %s deleted successfully!", projectID)
 }

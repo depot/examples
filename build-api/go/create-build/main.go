@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
 
@@ -34,26 +33,26 @@ func main() {
 	var buildErr error
 	defer b.Finish(buildErr)
 
-	fmt.Printf("Build registered: %s\n", b.ID)
+	log.Printf("Build registered: %s", b.ID)
 
 	// 2. Acquire builder machine
 	buildkit, buildErr := machine.Acquire(ctx, b.ID, b.Token, "arm64")
 	if buildErr != nil {
-		log.Printf("Failed to acquire builder: %v\n", buildErr)
+		log.Printf("Failed to acquire builder: %v", buildErr)
 		return
 	}
 	defer buildkit.Release()
 
-	fmt.Println("Builder acquired")
+	log.Printf("Builder acquired")
 
 	// 3. Connect to BuildKit
 	buildkitClient, buildErr := buildkit.Connect(ctx)
 	if buildErr != nil {
-		log.Printf("Failed to connect to BuildKit: %v\n", buildErr)
+		log.Printf("Failed to connect to BuildKit: %v", buildErr)
 		return
 	}
 
-	fmt.Println("Connected to BuildKit")
+	log.Printf("Connected to BuildKit")
 
 	// 4. Configure build (no push, just build)
 	solverOptions := client.SolveOpt{
@@ -78,12 +77,12 @@ func main() {
 	}()
 
 	// 6. Execute build
-	fmt.Println("Starting build...")
+	log.Printf("Starting build...")
 	_, buildErr = buildkitClient.Solve(ctx, nil, solverOptions, buildStatusCh)
 	if buildErr != nil {
-		log.Printf("Build failed: %v\n", buildErr)
+		log.Printf("Build failed: %v", buildErr)
 		return
 	}
 
-	fmt.Println("Build completed successfully!")
+	log.Printf("Build completed successfully!")
 }

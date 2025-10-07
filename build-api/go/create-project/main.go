@@ -50,15 +50,15 @@ func main() {
 		log.Fatalf("Failed to create project: %v", err)
 	}
 
-	fmt.Println("Project created successfully!")
-	fmt.Printf("\nProject ID:       %s\n", resp.Msg.Project.ProjectId)
-	fmt.Printf("Name:             %s\n", resp.Msg.Project.Name)
-	fmt.Printf("Region:           %s\n", resp.Msg.Project.RegionId)
-	fmt.Printf("Organization ID:  %s\n", resp.Msg.Project.OrganizationId)
+	log.Printf("Project created successfully!")
+	log.Printf("Project ID:       %s", resp.Msg.Project.ProjectId)
+	log.Printf("Name:             %s", resp.Msg.Project.Name)
+	log.Printf("Region:           %s", resp.Msg.Project.RegionId)
+	log.Printf("Organization ID:  %s", resp.Msg.Project.OrganizationId)
 	if resp.Msg.Project.CachePolicy != nil {
-		fmt.Printf("Cache Policy:     %d GB, %d days\n",
+		log.Printf("Cache Policy:     %d GB, %d days",
 			resp.Msg.Project.CachePolicy.KeepGb,
 			resp.Msg.Project.CachePolicy.KeepDays)
 	}
-	fmt.Printf("\nSave the Project ID to use in builds: %s\n", resp.Msg.Project.ProjectId)
+	log.Printf("Save the Project ID to use in builds: %s", resp.Msg.Project.ProjectId)
 }

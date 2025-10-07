@@ -38,21 +38,21 @@ func main() {
 	}
 
 	if len(resp.Msg.Projects) == 0 {
-		fmt.Println("No projects found")
+		log.Printf("No projects found")
 		return
 	}
 
-	fmt.Printf("Found %d project(s):\n\n", len(resp.Msg.Projects))
+	log.Printf("Found %d project(s):", len(resp.Msg.Projects))
 	for _, project := range resp.Msg.Projects {
-		fmt.Printf("Project ID:       %s\n", project.ProjectId)
-		fmt.Printf("Name:             %s\n", project.Name)
-		fmt.Printf("Region:           %s\n", project.RegionId)
-		fmt.Printf("Organization ID:  %s\n", project.OrganizationId)
+		log.Printf("Project ID:       %s", project.ProjectId)
+		log.Printf("Name:             %s", project.Name)
+		log.Printf("Region:           %s", project.RegionId)
+		log.Printf("Organization ID:  %s", project.OrganizationId)
 		if project.CachePolicy != nil {
-			fmt.Printf("Cache Policy:     %d GB, %d days\n",
+			log.Printf("Cache Policy:     %d GB, %d days",
 				project.CachePolicy.KeepGb,
 				project.CachePolicy.KeepDays)
 		}
-		fmt.Println()
+		log.Printf("")
 	}
 }

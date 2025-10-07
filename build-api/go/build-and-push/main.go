@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
 
@@ -45,26 +44,26 @@ func main() {
 	var buildErr error
 	defer b.Finish(buildErr)
 
-	fmt.Printf("Build registered: %s\n", b.ID)
+	log.Printf("Build registered: %s", b.ID)
 
 	// 2. Acquire builder machine
 	buildkit, buildErr := machine.Acquire(ctx, b.ID, b.Token, "arm64")
 	if buildErr != nil {
-		log.Printf("Failed to acquire builder: %v\n", buildErr)
+		log.Printf("Failed to acquire builder: %v", buildErr)
 		return
 	}
 	defer buildkit.Release()
 
-	fmt.Println("Builder acquired")
+	log.Printf("Builder acquired")
 
 	// 3. Connect to BuildKit
 	buildkitClient, buildErr := buildkit.Connect(ctx)
 	if buildErr != nil {
-		log.Printf("Failed to connect to BuildKit: %v\n", buildErr)
+		log.Printf("Failed to connect to BuildKit: %v", buildErr)
 		return
 	}
 
-	fmt.Println("Connected to BuildKit")
+	log.Printf("Connected to BuildKit")
 
 	// 4. Configure authentication
 	var authProvider session.Attachable
@@ -79,7 +78,7 @@ func main() {
 		if registryURL == "" {
 			registryURL = "https://index.docker.io/v1/" // Default to Docker Hub
 		}
-		fmt.Println("Using programmatic authentication")
+		log.Printf("Using programmatic authentication")
 		authProvider = authprovider.NewDockerAuthProvider(&configfile.ConfigFile{
 			AuthConfigs: map[string]types.AuthConfig{
 				registryURL: {
@@ -90,7 +89,7 @@ func main() {
 		}, nil)
 	} else {
 		// Use docker login credentials (from ~/.docker/config.json)
-		fmt.Println("Using docker login credentials")
+		log.Printf("Using docker login credentials")
 		authProvider = authprovider.NewDockerAuthProvider(config.LoadDefaultConfigFile(os.Stderr), nil)
 	}
 
@@ -130,12 +129,12 @@ func main() {
 	}()
 
 	// 7. Execute build and push
-	fmt.Printf("Building and pushing to %s...\n", imageTag)
+	log.Printf("Building and pushing to %s...", imageTag)
 	_, buildErr = buildkitClient.Solve(ctx, nil, solverOptions, buildStatusCh)
 	if buildErr != nil {
-		log.Printf("Build failed: %v\n", buildErr)
+		log.Printf("Build failed: %v", buildErr)
 		return
 	}
 
-	fmt.Printf("Successfully built and pushed %s!\n", imageTag)
+	log.Printf("Successfully built and pushed %s!", imageTag)
 }
