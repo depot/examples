@@ -11,6 +11,8 @@ import (
 	"github.com/depot/depot-go/machine"
 	cliv1 "github.com/depot/depot-go/proto/depot/cli/v1"
 	"github.com/docker/cli/cli/config"
+	"github.com/docker/cli/cli/config/configfile"
+	"github.com/docker/cli/cli/config/types"
 	"github.com/moby/buildkit/client"
 	"github.com/moby/buildkit/session"
 	"github.com/moby/buildkit/session/auth/authprovider"
@@ -65,18 +67,32 @@ func main() {
 	fmt.Println("Connected to BuildKit")
 
 	// 4. Configure authentication
-	// Option 1: Use docker login credentials (default)
-	authProvider := authprovider.NewDockerAuthProvider(config.LoadDefaultConfigFile(os.Stderr), nil)
+	var authProvider session.Attachable
 
-	// Option 2: Provide credentials programmatically (uncomment and add imports to use)
-	// See: github.com/docker/cli/cli/config/configfile and github.com/docker/cli/cli/config/types
-	// username := os.Getenv("DOCKERHUB_USERNAME")
-	// password := os.Getenv("DOCKERHUB_TOKEN")
-	// authProvider = authprovider.NewDockerAuthProvider(&configfile.ConfigFile{
-	// 	AuthConfigs: map[string]types.AuthConfig{
-	// 		"https://index.docker.io/v1/": {Username: username, Password: password},
-	// 	},
-	// }, nil)
+	// Check if programmatic credentials are provided via environment variables
+	username := os.Getenv("REGISTRY_USERNAME")
+	password := os.Getenv("REGISTRY_PASSWORD")
+	registryURL := os.Getenv("REGISTRY_URL")
+
+	if username != "" && password != "" {
+		// Use programmatic credentials
+		if registryURL == "" {
+			registryURL = "https://index.docker.io/v1/" // Default to Docker Hub
+		}
+		fmt.Println("Using programmatic authentication")
+		authProvider = authprovider.NewDockerAuthProvider(&configfile.ConfigFile{
+			AuthConfigs: map[string]types.AuthConfig{
+				registryURL: {
+					Username: username,
+					Password: password,
+				},
+			},
+		}, nil)
+	} else {
+		// Use docker login credentials (from ~/.docker/config.json)
+		fmt.Println("Using docker login credentials")
+		authProvider = authprovider.NewDockerAuthProvider(config.LoadDefaultConfigFile(os.Stderr), nil)
+	}
 
 	// 5. Configure build with push
 	solverOptions := client.SolveOpt{
