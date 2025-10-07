@@ -102,12 +102,6 @@ export DOCKERHUB_TOKEN=mytoken
 go run build-and-push/main.go docker.io/myuser/myapp:latest
 ```
 
-**Supported registries:**
-- Docker Hub: `docker.io/user/image:tag`
-- GitHub Container Registry: `ghcr.io/org/image:tag`
-- AWS ECR: `123456789012.dkr.ecr.us-east-1.amazonaws.com/image:tag`
-- Google Artifact Registry: `us-docker.pkg.dev/project/repo/image:tag`
-
 ## Example Structure
 
 ```
