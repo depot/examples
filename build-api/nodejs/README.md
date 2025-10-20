@@ -14,3 +14,4 @@ Node.js files to interact with the API located in the `src/` directory:
 - create-project.js
 - delete-project.js
 - create-build.js
+- delete-old-images.js
