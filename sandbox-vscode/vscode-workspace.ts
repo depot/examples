@@ -146,20 +146,19 @@ try {
   ok('~/.bashrc wired')
 
   // code-server is the editor; cloudflared exposes it over a public HTTPS quick
-  // tunnel (no account, no DNS). Both are single static binaries: code-server's
-  // installer auto-detects arch, and we map uname -m -> cloudflared's asset arch.
+  // tunnel (no account, no DNS). Both are single static binaries — Depot's base
+  // image is x86_64, so we grab the amd64 cloudflared directly.
   step('Installing code-server + cloudflared')
   const install = await box.runCommand({
     cmd: '/bin/bash',
     args: [
       '-c',
       `set -e
-       case "$(uname -m)" in x86_64) cfarch=amd64;; aarch64|arm64) cfarch=arm64;; *) cfarch=amd64;; esac
        curl -fsSL https://code-server.dev/install.sh | sh -s -- --method=standalone --prefix=${HOME}/.local
        mkdir -p ${HOME}/.local/bin
-       curl -fL --progress-bar "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-$cfarch" -o ${HOME}/.local/bin/cloudflared
+       curl -fL --progress-bar "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64" -o ${HOME}/.local/bin/cloudflared
        chmod +x ${HOME}/.local/bin/cloudflared
-       echo "  ${green('✓')} code-server + cloudflared (linux-$cfarch) installed"`,
+       echo "  ${green('✓')} code-server + cloudflared installed"`,
     ],
   })
   for await (const chunk of install.logs()) process.stdout.write(chunk.data)
@@ -185,18 +184,18 @@ try {
     detached: true,
   })
 
-  // Warm the workspace in the background: run `npm install` in every repo at
-  // once, detached, so dependencies are landing while you're already in the
-  // editor. node + npm ship in the base image, so there's nothing to set up.
-  step('Kicking off background warm-up (npm install in every repo)')
+  // Warm the workspace in the background: in every repo at once, detached,
+  // backfill full git history (we cloned shallow) and run `npm install` — so
+  // it's all landing while you're already in the editor. node + npm + git ship
+  // in the base image, so there's nothing to set up.
+  step('Kicking off background warm-up (unshallow + npm install in every repo)')
   await box.runCommand({
     cmd: '/bin/bash',
     args: [
       '-c',
       `cd ${HOME}/ws
-       for d in */; do ( cd "$d" && [ -f package.json ] && npm install && echo "npm install: $d ✓" ) & done
-       wait
-       echo done`,
+       for d in */; do ( cd "$d" && git fetch --unshallow >/dev/null 2>&1; [ -f package.json ] && npm install ) & done
+       wait`,
     ],
     detached: true,
   })
