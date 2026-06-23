@@ -1,0 +1,18 @@
+{
+  "name": "depot-sandbox-vscode-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Boot a remote, multi-repo VS Code dev environment on a Depot sandbox",
+  "scripts": {
+    "start": "tsx vscode-workspace.ts"
+  },
+  "dependencies": {
+    "@depot/sandbox": "^0.1.0-beta.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.3",
+    "tsx": "^4.19.2",
+    "typescript": "^6.0.3"
+  }
+}
