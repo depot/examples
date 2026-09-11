@@ -1,0 +1,18 @@
+# Bakes ffmpeg, ripgrep, and pandoc into a reusable sandbox image. The result is
+# pushed to <org-id>.registry.depot.dev/depot/snapshots/sandbox-toolbox:v1, which
+# ../sandbox-custom-image/boot-custom-image.ts boots with the Sandbox SDK.
+# See that directory's README for what does and doesn't survive a snapshot.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-image:
+    runs-on: depot-ubuntu-latest
+    # Skipped entirely once this tag exists — bump it when the tool list changes.
+    snapshot: sandbox-toolbox:v1
+    steps:
+      - name: Install the tools to bake in
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg ripgrep pandoc
